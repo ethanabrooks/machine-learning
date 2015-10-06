@@ -72,7 +72,6 @@ class LogisticRegression:
             the gradient, an d-dimensional vector
         """
         n, d = X.shape
-        d += 1  # for added ones column
         assert n == len(y)
         # assert theta.shape == (1, d)
 
@@ -90,17 +89,21 @@ class LogisticRegression:
             y is an n-dimensional numpy vector
         """
 
+        X = np.matrix(X)
+        ones_column = np.ones((X.shape[0], 1))
+        X = np.column_stack([ones_column, X])
         n, d = X.shape
+
         # self.theta = np.matrix([4.88002867, 1.04755767, -0.06604604,
         # -0.08645819, -0.00889369, 0.16846109,
         #                         0.05923942, -0.04213808, 0.0160093, 0.54581483])
         # self.theta = np.matrix([1.71297509, 3.98109885, 3.7138258])
         # self.theta = np.matrix([3.01131387, 1.20161574])
-        self.theta = np.matrix(np.random.rand(1, d + 1))
         # self.theta = np.matrix([3.81498153, 2.48674634, 0.25994663, -3.94751691,
         # -0.36834352, 1.03430205, -1.96120589, -1.57746805,
         #                         -1.26575392, -3.2139977, 0.28956062, 0.27853624,
         #                         -0.21059673, -0.56927184, 0.27781856, 1.4877498, 0.97117391])
+        self.theta = np.matrix(np.random.rand(1, d))
         i = 0
         while True:
             i += 1
@@ -149,9 +152,6 @@ class LogisticRegression:
 
 
 def h(theta, X):
-    X = np.matrix(X)
-    ones_column = np.ones((X.shape[0], 1))
-    X = np.column_stack([ones_column, X])
 
     def sigma_single_val(z):
         try:
