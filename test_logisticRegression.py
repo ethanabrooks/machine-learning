@@ -57,12 +57,14 @@ def test_gradient0(logreg):
 
 def test_Gsummand(logreg):
     logreg.theta = np.matrix([5, -2])
-    actual = logreg.Gsummand([1, 8], 1, logreg.theta, 0)
+    X = np.matrix([1, 8])
+    actual = logreg.Gsummand(X, 1, logreg.theta, 0)
     desired = -7.99986638863
     npt.assert_almost_equal(actual, desired)
 
     logreg.theta = np.matrix([15, -4])
-    actual = logreg.Gsummand([1, 5], 0, logreg.theta, 0)
+    X = np.matrix([1, 5])
+    actual = logreg.Gsummand(X, 0, logreg.theta, 0)
     desired = 0.0334642546214
     npt.assert_almost_equal(actual, desired)
 
@@ -95,19 +97,22 @@ def test_predict(logreg, X):
     assert logreg.predict(X[0, :])[0, 0] == .5
 
     logreg.theta = np.matrix([0, 1, 2])
-    actual = logreg.predict([1, 4, -3])
-    desired = np.matrix([0.11920292])
+    X = np.matrix([1, 4, -3])
+    actual = logreg.predict(X)
+    desired = np.asarray([[0.11920292]])
     npt.assert_almost_equal(actual, desired)
 
 
 def test_Jsummand(logreg):
     logreg.theta = np.matrix([5, -2])
-    actual = logreg.Jsummand(1, [1, 2, 8], logreg.theta)
+    X = np.matrix([1, 2, 8])
+    actual = logreg.Jsummand(1, X, logreg.theta)
     desired = 9223372036854775807
     npt.assert_almost_equal(actual, desired)
 
     logreg.theta = np.matrix([15, -4])
-    actual = logreg.Jsummand(0, [1, 2, 5], logreg.theta)
+    X = np.matrix([1, 2, 5])
+    actual = logreg.Jsummand(0, X, logreg.theta)
     desired = 9223372036854775807
     npt.assert_almost_equal(actual, desired)
 

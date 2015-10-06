@@ -52,7 +52,7 @@ class LogisticRegression:
     def Gsummand(self, Xi, yi, theta, j):
         return (
                    h(theta, Xi) - yi
-               )[0, 0] * Xi[j - 1]  # because of added ones column
+               )[0, 0] * Xi[0, j - 1]  # because of added ones column
 
     def gradientJ(self, X, y, j, n, regLambda, theta):
         return sum(
@@ -152,6 +152,8 @@ class LogisticRegression:
 
 
 def h(theta, X):
+    theta = np.copy(theta)
+    theta.shape = (theta.size, 1)
 
     def sigma_single_val(z):
         try:
@@ -163,7 +165,7 @@ def h(theta, X):
                 return 1.
 
     sigma = np.vectorize(sigma_single_val)
-    z = X * theta.T
+    z = X * theta
     np_asarray = np.asarray(sigma(z))
     return np_asarray
 
